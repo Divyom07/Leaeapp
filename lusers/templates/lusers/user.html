@@ -58,7 +58,13 @@
                     <!-- calendar-content -->
                     <h4>Calendar</h4>
                     
-                    {{ calendar }}
+                    
+                    {% for i in leave_data %}
+                    {{ i.pending }}
+                    {{ i.status}}
+                    
+                    {{ i.reject }}
+                    {% endfor %}
                 </div>
                 <div class="status-content">
                     
@@ -72,7 +78,7 @@
                           <th scope="col">Date</th>
                           <th scope="col">Leave Type</th>
                           <th scope="col">Reason</th>
-                          
+                        
                         </tr>
                       </thead> {% endcomment %}
                       <tbody>

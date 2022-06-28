@@ -18,22 +18,19 @@ def user_view(request):
             tdate = form.cleaned_data['tdate']
             type_of_leave= form.cleaned_data['type_of_leave']
             reason = form.cleaned_data['reason']
-            
+           
             
         leavereq = LeaveApplication(authuser = request.user, reason = reason, fdate = fdate, type_of_leave= type_of_leave,tdate = tdate)
         print(leavereq)
         leavereq.save()
-    
+            
 
 
     leave_data = LeaveApplication.objects.filter(authuser = request.user).order_by('-id')[::]
     leave_stat = LeaveApplication.objects.filter(authuser = request.user).order_by('-id')[:1]
-    
-    month_number = list(calendar.month_name)
-    month_pr = int(month_number)
-    
-    my_cal = HTMLCalendar().formatmonth(month_pr)
-    
+
+    my_cal = HTMLCalendar()
+
     form = LeaveAppForm()
     parms = {'form': form, 'leave_data' : leave_data, 'leave_stat':leave_stat, 'calendar': my_cal}
     return render(request, 'lusers/user.html', parms)
@@ -46,21 +43,16 @@ def manager_view(request):
     if request.method =='POST':
         id_list = request.POST.getlist('boxes')
         id_reject = request.POST.getlist('box')
-        
+
         leave_user_data.update(status=False)
         leave_user_data.update(reject = False)
-        
-        
+
         for i in id_list or id_reject:
             if i in id_list:
-                LeaveApplication.objects.filter(pk=int(i)).update(status =True)
+                LeaveApplication.objects.filter(pk=int(i)).update(status =True,pending = False)
             elif i in id_reject:
-                LeaveApplication.objects.filter(pk=int(i)).update(reject =True)
-        
-        
-        
+                LeaveApplication.objects.filter(pk=int(i)).update(reject =True, pending = False)
 
-    
     prms = {'user' : user, 'leave_user_data':leave_user_data}
     return render(request, 'lusers/admin.html', prms)
 

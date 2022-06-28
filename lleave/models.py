@@ -15,6 +15,7 @@ class LeaveApplication(models.Model):
     authuser = models.ForeignKey(User,on_delete=models.CASCADE, default="", null =True, db_constraint=False)
     status = models.BooleanField('Approved', default = False)
     reject = models.BooleanField('Reject', default = False)
+    pending = models.BooleanField('Pending', default = True)
     
 
     def __str__(self):
