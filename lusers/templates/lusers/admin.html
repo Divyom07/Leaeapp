@@ -1,0 +1,135 @@
+{% extends 'lusers/base.html' %}
+{% load static %}
+
+{% block title %} Admin-Page{% endblock %}
+{% block bodystyle %}  <link rel="stylesheet" type= "text/css" href={% static "css/admin.css" %}>{% endblock %}
+{% block body %}
+    <div class="con">
+        <div class="navbar">
+            <div class="admin-space">
+                <a href="/dashboard/"> User </a>
+                <a href=""> Export to Excel </a>
+                <a href="/dashboard/createuser/"> Create New User </a>
+
+            </div>
+            <div class="logo-space">
+                <img src={% static "images/audvik-logo2.png" %} alt="" width="80rem">
+            </div>
+            <div class="user-name-space">
+                <div class="name-space">
+                  {{ request.user|capfirst}}
+                </div>
+                <div class="user-icon-space dropdown" style="margin-left:5px">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <div class="arrow-con">
+                       
+                    </div>
+                    <div class="dropdown-content">
+                        <a href="/dashboard/profile/{{ request.user }}">Profile</a>
+                        <a href="/logout/">Logout</a>
+                      </div>
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="main">
+            <div class="content-left">
+              <div class="outer-wrapper">
+                
+                <select>
+                  {% for i in user %}
+                  <option value="i.id">{{ i.username }}</option>
+                  {% endfor %}
+                </select>
+                
+                <select>
+                  <option value="0">Designation</option>
+                </select>
+              </div>
+
+                <h4>Leave Approval List</h4>
+                <div class="outer-wrapper">
+                  <div class="table-wrapper">
+                <table class="t1">
+                    <thead>
+                        <tr>
+                          {% comment %} <th scope="col">S.no</th> {% endcomment %}
+                          <th scope="col">Name</th>
+                          <th scope="col">Leave Date</th>
+                          <th scope="col">Leave Type</th>
+                          <th scope="col">Reason</th>
+                          <th scope="col">Action</th>
+                            
+                        </tr>
+                      </thead>
+                    </thead>
+                    <tbody>
+                      {% for i in leave_user_data|slice:"::-1" %}
+                      <tr>
+                          {% comment %} <th scope="row">{{ forloop.counter }}</th> {% endcomment %}
+                          <td>{{i.authuser|capfirst}}</td>
+                          <td>{{i.fdate}} - {{ i.tdate }}</td>
+                          <td>{{i.type_of_leave}}</td>
+                          <td > <div id="tb-reason"> {{i.reason}} </div></td>
+                          <td>
+                            <form action="" method="post" id="action-form">
+                                {% csrf_token %}
+
+                            {% comment %} {% if i.status %}
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" checked="checked" value={{ i.id }} name="boxes">
+                                
+                            {% else %} {% endcomment %}
+                            
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" value={{ i.id }} name="boxes">
+                              <label> Approve</label>
+                              
+                              <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value={{ i.id }} name="box">
+                                <label> Reject</label>
+                            
+                          </td>
+                          {% comment %} {% endif %} {% endcomment %}
+                            
+                          </td>
+                          
+                        </tr>
+                        
+                        {% endfor %}
+                        
+                      </tbody>
+                    </table>
+                  
+                  
+                  
+                  </div>
+                </div>
+                <input type="submit" value="Update" class="update-btn">
+            </div>
+          </form>
+            <div class="content-right">
+                
+                    <!-- Employee List -->
+                    <h4>Employee</h4>
+                    <div class="emp-wrapper">
+                    <table class="t2">
+                        {% for i in user|slice:"0:" %}
+                        <tr>
+                          <td>{{i.username|capfirst }}  &nbsp; <i id="delete-user-icon" class="fa-solid fa-circle-minus"></i></td>
+                        </tr>
+                        {% endfor %}   
+                        
+                       
+                       
+                    </table>
+                  </div>
+                    
+            </div>
+
+        </div>
+        {% endblock %} 
+
+       

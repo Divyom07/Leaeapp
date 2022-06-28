@@ -1,0 +1,100 @@
+{% extends 'lusers/base.html' %}
+{% load static %}
+
+
+
+{% block title %} User-Page{% endblock %}
+
+{% block bodystyle %}  <link rel="stylesheet" type= "text/css" href={% static "css/user.css" %}>{% endblock %}
+
+{% block body %}
+    <div class="con">
+        <div class="navbar">
+            <div class="admin-space">
+                <a href="/dashboard/manager/"> Admin </a>
+            </div>
+            <div class="logo-space">
+                <img src={% static "images/audvik-logo2.png" %} type="image/png" alt="" width="80rem">
+            </div>
+            <div class="user-name-space">
+                <div class="name-space">    
+                    {{ request.user|capfirst}}
+                </div>
+                <div class="user-icon-space dropdown" style="margin-left:5px">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <div class="arrow-con">
+                       
+                    </div>
+                    <div class="dropdown-content">
+                        <a href="/dashboard/profile/{{ request.user }}">Profile</a>
+                        <a href="/logout/">Logout</a>
+                      </div>
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="main">
+            <div class="content-left">
+                <h4>Leave Application Form</h4>
+                <form class="leave-application-form" action="" method="post">
+                    {% csrf_token %}
+                    <label class="from-date" for="fdate"> From Date: </label><br>
+                    {{ form.fdate }}<p><br>
+                    <label for="tdate"> To Date: </label><br>
+                    {{ form.tdate }}<p><br>
+                    <label for="type_of_leave"> Type of Leave: </label><br>
+                    {{ form.type_of_leave }}<p><br>
+                    <label for="reason"> Reason: </label><br>
+                    {{ form.reason }}<p><br>
+                    <button>Submit</button>
+                    
+                </form>
+
+            </div>
+            <div class="content-right">
+                <div class="calendar-content">
+                    <!-- calendar-content -->
+                    <h4>Calendar</h4>
+                    
+                    {{ calendar }}
+                </div>
+                <div class="status-content">
+                    
+                    <h4>Status</h4>
+                    <hr>
+                    <div class="status-wrapper">
+                    <table class="status-table">
+                    {% comment %} <thead>
+                        <tr>
+                          <th scope="col">S.no</th>
+                          <th scope="col">Date</th>
+                          <th scope="col">Leave Type</th>
+                          <th scope="col">Reason</th>
+                          
+                        </tr>
+                      </thead> {% endcomment %}
+                      <tbody>
+                        {% for i in leave_data|slice:"::" %}
+                        <tr>
+                            {% comment %} <th scope="row">{{ forloop.counter }}</th> {% endcomment %}
+                            <td>{{i.fdate}}</td>
+                            <td>{{i.tdate}}</td>
+                            <td>{{i.type_of_leave}}</td>
+                        </tr>
+
+                          {% endfor %}
+                          
+                        </tbody>
+                      </table>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+      
+        {% endblock %} 
+

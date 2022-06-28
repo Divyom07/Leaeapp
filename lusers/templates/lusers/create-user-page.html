@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>create-new-user|Audviklabs Leave Portal</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <script src="https://kit.fontawesome.com/a1ecbac451.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href={% static "css/admin.css" %}>
+    <style>
+        .main-content{
+        width:90%;
+        background-color: white;
+        margin: auto 5rem;
+        border-radius: 10px;
+        height: auto;
+        padding: 1rem 0;
+    }
+        </style>
+</head>
+
+<body>
+    <div class="con">
+        <div class="navbar" style="padding:0px 4rem" >
+            <div class="admin-space">
+                <a href="/dashboard/manager/"> Admin </a>
+            </div>
+            <div class="logo-space">
+                <img src={% static "images/audvik-logo2.png" %} alt="" width="80rem">
+            </div>
+            <div class="user-name-space">
+                <div class="name-space">
+                    {{ request.user|capfirst}}
+                </div>
+                <div class="user-icon-space dropdown" style="margin-left:5px">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <div class="arrow-con">
+                       
+                    </div>
+                    <div class="dropdown-content">
+                        <a href="/dashboard/profile/{{ request.user }}">Profile</a>
+                        <a href="/logout/">Logout</a>
+                      </div>
+
+
+                </div>
+
+            </div>
+        </div>
+        <div class="main">
+            <div class="main-content">
+                <h4>New User Form</h4>
+                <form class="new-user-form" action="" method="post">
+                {% csrf_token %}
+                <label class="from-name-label" for="name"> Name </label> &nbsp;&nbsp;
+                {{ form.name }}<p><br>
+                <label class="from-date" for="desig"> Designation </label> &nbsp;&nbsp;
+                {{ form.designation }}<p><br>
+                <label for="gender"> Gender </label> &nbsp;&nbsp;
+                {{ form.gender }}<p><br>
+                <label for="phoneno"> Contact No. </label> &nbsp;&nbsp;
+                {{ form.phoneno }}<p><br>
+                <label for="llocation"> Location </label> &nbsp;&nbsp;
+                {{ form.Location }}<p><br>
+                <label for="marital-status">Marital Status </label> &nbsp;&nbsp;
+                <span>{{ form.Marital_status }}<span><br> <br>
+                <button >Submit</button>
+                </form>
+            </div>
+        </div>
+       
+
+</body>
+
+</html>
